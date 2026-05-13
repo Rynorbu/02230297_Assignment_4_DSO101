@@ -28,5 +28,5 @@ jobs:
 
     - name: Test Coverage Report
       run: |
-        echo "✅ All tests passed successfully!"
+        echo "All tests passed successfully!"
         pytest --tb=short
