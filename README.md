@@ -51,30 +51,64 @@ This is a **Flask-based REST API** with a complete automated CI/CD pipeline. Eve
 ### What Was Built
 
 #### 1. **Flask REST API** (`app.py`)
-A lightweight web application with 4 endpoints:
+A feature-rich web application with **20+ endpoints** including mathematical operations, converters, calculators, string tools, and statistics:
 
-```python
-# Home endpoint - JSON response
-GET / → {"message": "Hello, World!", "status": "success"}
+**Mathematical Operations:**
+```
+GET /api/add/<a>/<b>              → Addition result
+GET /api/subtract/<a>/<b>         → Subtraction result
+GET /api/multiply/<a>/<b>         → Multiplication result
+GET /api/divide/<a>/<b>           → Division result with error handling
+GET /api/power/<base>/<exponent>  → Power calculation
+GET /api/sqrt/<number>            → Square root
+GET /api/factorial/<number>       → Factorial calculation
+```
 
-# Mathematical API - Add two numbers
-GET /api/add/<a>/<b> → {"result": sum, "operation": "addition"}
+**Converters:**
+```
+GET /api/temperature/celsius-to-fahrenheit/<celsius>      → Temperature conversion
+GET /api/temperature/fahrenheit-to-celsius/<fahrenheit>   → Temperature conversion
+```
 
-# Mathematical API - Subtract two numbers  
-GET /api/subtract/<a>/<b> → {"result": difference, "operation": "subtraction"}
+**Real-World Calculators:**
+```
+GET /api/bmi/<weight>/<height>    → BMI with health category
+GET /api/grade/<score>            → Letter grade with description
+```
 
-# Health check - System status
-GET /health → {"status": "healthy"}
+**String Operations:**
+```
+GET /api/string/reverse/<text>    → Reversed string
+GET /api/string/uppercase/<text>  → Uppercase conversion
+GET /api/string/lowercase/<text>  → Lowercase conversion
+GET /api/string/length/<text>     → String length with vowel/consonant analysis
+```
+
+**Statistics (POST):**
+```
+POST /api/statistics/average      → Average of array
+POST /api/statistics/sum          → Sum of array
+```
+
+**Utilities:**
+```
+GET /                             → API documentation
+GET /health                       → Health check
+GET /api/info                     → Application information
 ```
 
 #### 2. **Unit Tests** (`test_app.py`)
-6 comprehensive tests covering all endpoints:
-- test_home - Validates home endpoint response
-- test_add - Tests addition functionality
-- test_subtract - Tests subtraction functionality
-- test_health - Tests health check endpoint
-- test_add_zero - Tests addition with zero
-- test_subtract_same_numbers - Tests subtracting identical numbers
+**28 comprehensive tests** covering all endpoints and edge cases:
+- Basic operations: home, add, subtract, health checks
+- Advanced math: multiply, divide, power, sqrt, factorial
+- Error handling: divide by zero, negative sqrt, invalid inputs
+- Converters: Celsius ↔ Fahrenheit conversions
+- Calculators: BMI (normal/overweight), grade calculations
+- String operations: reverse, uppercase, lowercase, length analysis
+- Statistics: average and sum calculations
+- Validation: all error cases and boundary conditions
+
+**Test Results:** 28/28 passing (100% success rate)
 
 #### 3. **CI/CD Pipeline** (`.github/workflows/ci.yml`)
 GitHub Actions workflow that:
@@ -178,14 +212,18 @@ Deploy            Notify Dev
 
 ## Evidence & Screenshots
 
-### 1. Local Test Results
+### 1. Local Test Results - 28 Passing Tests
 ![Pytest Output](assets/pytest.png)
 
-**Description:** Shows all 6 unit tests passing locally using pytest. This proves the code works correctly before deployment. Tests cover:
-- Home endpoint functionality
-- Mathematical operations (add, subtract)
-- Health check endpoint
-- Edge cases (zero values, same numbers)
+**Description:** Shows all **28 unit tests passing** locally using pytest. This proves comprehensive code quality:
+- 7 mathematical operation tests
+- 2 temperature converter tests
+- 5 calculator tests (BMI and grades)
+- 4 string operation tests
+- 2 statistics tests
+- 2 utility endpoint tests
+- Plus error handling for all edge cases
+- **Execution Time:** ~0.22 seconds
 
 ---
 
@@ -206,93 +244,120 @@ Deploy            Notify Dev
 
 **Description:** GitHub Actions dashboard showing the CI/CD pipeline workflow:
 - Status: PASSED (green checkmark)
-- Workflow triggered automatically on code push
-- All steps completed successfully
-- Execution time: ~20 seconds
-- This proves continuous integration is working
-
----
+- Trigger: Automatic on code push to main
+- All pipeline steps completed successfully
+- **Execution time:** ~20-21 seconds
+- **All 28 tests verified** before deployment
+- Proves continuous integration working perfectly
 
 ### 4. GitHub Actions - Detailed Logs
-![Actions Detailed Logs](assets/action_details.png)
+![Actions Detailed Logs](assets/actions_details.png)
 
-**Description:** Expanded view of the GitHub Actions workflow showing:
-- Step 1: Code checkout successful
-- Step 2: Python 3.9 environment setup
-- Step 3: Dependencies installed (Flask, pytest)
-- Step 4: All tests executed
-- Result: 6/6 tests passed
-- This demonstrates the complete build and test pipeline
+**Description:** Expanded view of GitHub Actions workflow execution:
+- **Step 1:** Code checkout from repository 
+- **Step 2:** Python 3.9 environment setup 
+- **Step 3:** Dependencies installed (Flask 3.0.0, pytest 7.4.0) 
+- **Step 4:** All 28 tests executed successfully 
+- **Result:** 28/28 tests passed (not 6/6, enhanced version)
+- Demonstrates complete automated testing pipeline
 
 ---
 
-### 5. CI/CD Pipeline Architecture
+### 5. CI/CD Pipeline Architecture Diagram
 ![CI/CD Workflow](assets/cd_workflow.png)
 
-**Description:** Visual representation of the complete CI/CD pipeline architecture showing:
-- Trigger point: Git push to main branch
-- Build stage: Environment setup and dependency installation
-- Test stage: Automated unit testing
-- Deploy stage: Automatic deployment to Render
-- Pipeline ensures code quality before production
+**Description:** Complete CI/CD pipeline architecture:
+- **Trigger:** Git push to main branch
+- **Build Stage:** Python 3.9 setup + dependency installation
+- **Test Stage:** Automated execution of 28 comprehensive tests
+- **Quality Gate:** All tests must pass before deployment
+- **Deploy Stage:** Auto-deploy to Render if all tests pass
+- **Result:** 100% code quality assurance in production
 
 ---
 
-### 6. Live Application - Home Endpoint
+### 6. Live Application - Home Endpoint (API Documentation)
 ![Live App Homepage](assets/live_app.png)
 
-**Description:** The deployed Flask application responding to requests:
-- Shows JSON response from home endpoint
-- Proves app is accessible on the internet
-- Demonstrates successful deployment to Render
+**Description:** Deployed Flask application showing home endpoint:
+- Complete API documentation in JSON format
+- Lists all 20+ available endpoints
+- Shows endpoint paths, methods, and descriptions
+- Proves app is accessible on the internet (Render)
 - URL: https://zero2230297-assignment-4-dso101.onrender.com/
+- All endpoints immediately accessible
 
 ---
 
-### 7. Live Application - API Endpoint (Add Function)
-![API Add Endpoint](assets/api_endpoint_addfunction.png)
+### 7. Live Application - Grade Calculator
+![Grade Calculator](assets/grade.png)
 
-**Description:** Testing the mathematical API endpoint:
-- Endpoint: `/api/add/10/5`
-- Response: `{"result": 15, "operation": "addition"}`
-- Proves business logic works in production
-- Demonstrates REST API functionality
+**Description:** Real-world calculator endpoint:
+- Endpoint: `/api/grade/95`
+- Converts numerical score to letter grade with description
+- Shows practical business logic in production
+- Demonstrates advanced response formatting
 
 ---
 
-### 8. Live Application - Health Check
+### 8. Live Application - BMI Calculator
+![BMI Calculator](assets/BMI.png)
+
+**Description:** Advanced calculator endpoint:
+- Endpoint: `/api/bmi/70/1.75`
+- Calculates BMI and provides health category
+- Shows error handling for invalid inputs
+- Demonstrates practical real-world API usage
+
+### 9. Live Application - Temperature Converter
+![Temperature Converter](assets/converter.png)
+
+**Description:** Unit converter endpoint:
+- Endpoint: `/api/temperature/celsius-to-fahrenheit/25`
+- Converts between temperature scales
+- Shows decimal arithmetic precision
+- Practical utility in production
+
+### 10. Live Application - String Operations
+![String Operations](assets/string_reverse.png)
+
+**Description:** String manipulation endpoint:
+- Endpoint: `/api/string/reverse/hello`
+- Reverses strings and shows length analysis
+- Demonstrates text processing capabilities
+- Shows vowel and consonant counting
+
+### 11. Live Application - Health Check
 ![Health Check Endpoint](assets/health_check.png)
 
-**Description:** Testing the health check endpoint:
+**Description:** System monitoring endpoint:
 - Endpoint: `/health`
 - Response: `{"status": "healthy"}`
-- Used to verify application is running
-- Critical for monitoring in production
+- Used for uptime monitoring and load balancers
+- Critical for production health checks
 
 ---
 
-### 9. Render Dashboard - Deployment
+### 12. Render Dashboard - Live Deployment
 ![Render Dashboard](assets/render_dashboard.png)
 
 **Description:** Render cloud platform dashboard showing:
-- Service name and status
-- Live deployment confirmed
+- Service status: **LIVE** 
 - Build and start commands configured
-- Service URL assigned
-- Proves successful cloud deployment
+- Service URL: https://zero2230297-assignment-4-dso101.onrender.com/
+- Deployment history and logs
+- Auto-deployed after GitHub Actions passes
 
----
-
-### 10. Render Logs - Deployment Process
+### 13. Render Logs - Deployment Process
 ![Render Deployment Logs](assets/render_logs.png)
 
-**Description:** Detailed deployment logs showing:
-- Code cloned from GitHub
-- Python 3.14.3 environment setup
-- Dependencies installed successfully
-- Flask application started
-- Running on http://0.0.0.0:5000
-- Application ready to receive requests
+**Description:** Real deployment logs showing:
+- Repository cloned from GitHub
+- Python environment setup
+- Dependencies installed (Flask 3.0.0, pytest 7.4.0)
+- Flask app started successfully
+- Running on 0.0.0.0:5000 (external access enabled)
+- Application ready for requests
 
 ---
 
@@ -311,18 +376,32 @@ Deploy            Notify Dev
 
 All tests pass automatically when code is pushed to GitHub. Tests run in a clean Linux environment with Python 3.9, ensuring code works consistently across different systems.
 
-### Test Coverage
+### Test Coverage - 28 Comprehensive Tests
 
-| Test Name | Purpose | Status |
-|-----------|---------|--------|
-| test_home | Validates home endpoint returns correct JSON | PASS |
-| test_add | Tests addition endpoint with positive numbers | PASS |
-| test_subtract | Tests subtraction endpoint | PASS |
-| test_health | Tests health check endpoint | PASS |
-| test_add_zero | Tests addition with zero value | PASS |
-| test_subtract_same_numbers | Tests subtracting identical values | PASS |
+| Category | Tests | Status |
+|----------|-------|--------|
+| **Mathematical Operations** | 7 tests | PASS |
+| ├─ Addition, Subtraction, Multiply, Divide, Power | All positive & zero cases | PASS |
+| ├─ Square Root | Normal & error cases (negative) | PASS |
+| └─ Factorial | Valid & edge cases | PASS |
+| **Temperature Converters** | 2 tests | PASS |
+| ├─ Celsius to Fahrenheit | Multiple values | PASS |
+| └─ Fahrenheit to Celsius | Multiple values | PASS |
+| **Real-World Calculators** | 5 tests | PASS |
+| ├─ BMI Calculator | Normal weight, overweight, invalid | PASS |
+| └─ Grade Calculator | A, B, F grades, invalid input | PASS |
+| **String Operations** | 4 tests | PASS |
+| ├─ Reverse String | Various strings | PASS |
+| ├─ Case Conversion | Uppercase, lowercase | PASS |
+| └─ String Analysis | Length with vowel/consonant count | PASS |
+| **Statistics (POST)** | 2 tests | PASS |
+| ├─ Average | Array calculations | PASS |
+| └─ Sum | Array calculations | PASS |
+| **Utility Endpoints** | 2 tests | PASS |
+| ├─ Info Endpoint | Application metadata | PASS |
+| └─ 404 Errors | Invalid routes | PASS |
 
-**Result:** 100% test success rate (6/6 tests passing)
+**Overall Result:** 100% test success rate **(28/28 tests passing)** 
 
 ---
 
@@ -374,28 +453,69 @@ Response: {
 }
 ```
 
-#### 2. Addition Endpoint
+#### 2. Mathematical Operations
 ```
-GET /api/add/<a>/<b>
-Example: /api/add/10/5
+GET /api/add/10/5 → {"result": 15}
+GET /api/multiply/12/5 → {"result": 60}
+GET /api/divide/100/4 → {"result": 25.0}
+GET /api/power/2/8 → {"result": 256}
+GET /api/sqrt/144 → {"result": 12.0}
+GET /api/factorial/5 → {"result": 120}
+```
+
+#### 3. Real-World Calculators
+```
+GET /api/bmi/70/1.75
 Response: {
-  "a": 10,
-  "b": 5,
-  "result": 15,
-  "operation": "addition"
+  "weight_kg": 70,
+  "height_m": 1.75,
+  "bmi": 22.86,
+  "category": "Normal Weight"
+}
+
+GET /api/grade/95
+Response: {
+  "score": 95,
+  "grade": "A",
+  "description": "Excellent"
 }
 ```
 
-#### 3. Subtraction Endpoint
+#### 4. Temperature Converters
 ```
-GET /api/subtract/<a>/<b>
-Example: /api/subtract/10/3
+GET /api/temperature/celsius-to-fahrenheit/25
+Response: {"celsius": 25, "fahrenheit": 77.0}
+
+GET /api/temperature/fahrenheit-to-celsius/98.6
+Response: {"fahrenheit": 98.6, "celsius": 37.0}
+```
+
+#### 5. String Operations
+```
+GET /api/string/reverse/hello
 Response: {
-  "a": 10,
-  "b": 3,
-  "result": 7,
-  "operation": "subtraction"
+  "original": "hello",
+  "reversed": "olleh"
 }
+
+GET /api/string/length/python
+Response: {
+  "text": "python",
+  "length": 6,
+  "vowels": 1,
+  "consonants": 5
+}
+```
+
+#### 6. Statistics (POST Requests)
+```
+POST /api/statistics/average
+Body: {"numbers": [10, 20, 30, 40, 50]}
+Response: {"numbers": [...], "average": 30.0}
+
+POST /api/statistics/sum
+Body: {"numbers": [10, 20, 30, 40, 50]}
+Response: {"numbers": [...], "sum": 150}
 ```
 
 #### 4. Health Check Endpoint
